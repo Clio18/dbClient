@@ -12,14 +12,13 @@ public class ConsoleReporter implements Report {
         if (generalData.getHeaders().isEmpty()) {
             this.headers = null;
             this.values = null;
-            this.generalData = generalData;
         } else {
             String firstHeader = generalData.getHeaders().get(0);
             int size = generalData.getValues().get(firstHeader).size();
             this.headers = new String[generalData.getHeaders().size()];
-            this.values = new String[generalData.getHeaders().size()][size];
-            this.generalData = generalData;
+            this.values = new String[size][generalData.getHeaders().size()];
         }
+        this.generalData = generalData;
     }
 
     @Override
@@ -36,10 +35,17 @@ public class ConsoleReporter implements Report {
         for (int i = 0; i < generalData.getHeaders().size(); i++) {
             String header = generalData.getHeaders().get(i);
             headers[i] = header;
-            for (int j = 0; j < generalData.getValues().get(header).size(); j++) {
-                values[i][j] = generalData.getValues().get(header).get(j);
+        }
+
+        int length = generalData.getValues().get(headers[0]).size();
+        for (int i = 0; i < length; i++) {
+            for (String header : generalData.getHeaders()) {
+                int index = generalData.getHeaders().indexOf(header);
+                String value = generalData.getValues().get(header).get(i);
+                values[i][index] = value;
             }
         }
+
         return this;
     }
 
