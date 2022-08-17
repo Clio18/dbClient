@@ -15,6 +15,7 @@ public class ConsoleReporter implements Reporter {
         } else {
             String firstHeader = generalData.getHeaders().get(0);
             int listOfValuesSize = generalData.getValues().get(firstHeader).size();
+
             int headerSize = generalData.getHeaders().size();
             this.headers = new String[headerSize];
             this.values = new String[listOfValuesSize][headerSize];
@@ -32,7 +33,7 @@ public class ConsoleReporter implements Reporter {
         }
     }
 
-    public ConsoleReporter prepare() {
+    ConsoleReporter prepare() {
         for (int i = 0; i < generalData.getHeaders().size(); i++) {
             String header = generalData.getHeaders().get(i);
             headers[i] = header;
