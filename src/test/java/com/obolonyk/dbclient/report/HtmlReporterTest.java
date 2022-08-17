@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HtmlReporterTest {
 
     @Test
-    void test (){
+    void testCreateHTML (){
         String expected = """
                 <table>
                     <tr>

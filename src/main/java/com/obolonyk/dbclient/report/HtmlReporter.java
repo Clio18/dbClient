@@ -27,7 +27,6 @@ public class HtmlReporter implements Reporter {
         File reportFile = new File(path, "report_" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
             bufferedWriter.write(html);
-            bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
