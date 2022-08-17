@@ -16,35 +16,37 @@ class HtmlReporterTest {
         String expected = """
                 <table>
                     <tr>
-                        <th>one</th>
-                        <th>two</th>
-                        <th>three</th>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>LAST_NAME</th>
                     </tr>
                     <tr>
                         <td>1</td>
+                        <td>Ram</td>
+                        <td>Ahmed</td>
+                    </tr>
+                    <tr>
                         <td>2</td>
+                        <td>And</td>
+                        <td>Babad</td>
+                    </tr>
+                    <tr>
                         <td>3</td>
-                        <td>11</td>
+                        <td>Mes</td>
+                        <td>Medab</td>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>44</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>77</td>
+                        <td>Tak</td>
+                        <td>Nuno</td>
                     </tr>
                 </table>
                 """;
-        List<String> headers = List.of("one", "two", "three");
+        List<String> headers = List.of("ID", "NAME", "LAST_NAME");
         Map<String, List<String>> values = new HashMap<>();
-        values.put("one", List.of("1", "2", "3", "11"));
-        values.put("two", List.of("4", "5", "6", "44"));
-        values.put("three", List.of("7", "8", "9", "77"));
+        values.put("ID", List.of("1", "2", "3", "4"));
+        values.put("NAME", List.of("Ram", "And", "Mes", "Tak"));
+        values.put("LAST_NAME", List.of("Ahmed", "Babad", "Medab", "Nuno"));
         GeneralData generalData = new GeneralData(headers, values);
         String html = HtmlReporter.createHTML(generalData);
         assertEquals(expected, html);

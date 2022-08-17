@@ -1,8 +1,6 @@
-package com.obolonyk.dbclient;
+package com.obolonyk.dbclient.report;
 
-import com.jakewharton.fliptables.FlipTableConverters;
 import com.obolonyk.dbclient.entity.GeneralData;
-import com.obolonyk.dbclient.report.ConsoleReporter;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

@@ -27,6 +27,7 @@ public class HtmlReporter implements Report {
         File reportFile = new File(path, "report" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
             bufferedWriter.write(html);
+            bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,11 +45,17 @@ public class HtmlReporter implements Report {
             stringBuilder.append(Constants.CLOSE_TH_TAG);
         }
         stringBuilder.append(Constants.CLOSE_TR_TAG);
+
+        //to get the size of the list of values
         Set<String> keySet = values.keySet();
-        for (String header : keySet) {
+        String firstHeader = keySet.iterator().next();
+        int sizeOfListValues = values.get(firstHeader).size();
+
+        for (int i = 0; i < sizeOfListValues; i++) {
             stringBuilder.append(Constants.OPEN_TR_TAG);
-            for (String value : values.get(header)) {
+            for (String header : headers) {
                 stringBuilder.append(Constants.OPEN_TD_TAG);
+                String value = values.get(header).get(i);
                 stringBuilder.append(value);
                 stringBuilder.append(Constants.CLOSE_TD_TAG);
             }
