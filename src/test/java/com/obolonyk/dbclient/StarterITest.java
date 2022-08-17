@@ -45,7 +45,6 @@ class StarterITest {
 
     @Test
     void testPrintDbTableAfterSelect() throws SQLException {
-        //if select, create  -> return resultSet
         ResultSet resultSet = statement.executeQuery("SELECT * from users");
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
@@ -61,7 +60,6 @@ class StarterITest {
 
     @Test
     void testCheckResultAfterInsert() throws SQLException {
-        //if insert, update, delete -> return int
         int i = statement.executeUpdate("INSERT INTO Users VALUES (4, 'Simpson', 'Springfield');");
         assertEquals(1, i);
     }

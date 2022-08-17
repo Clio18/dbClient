@@ -14,9 +14,10 @@ public class ConsoleReporter implements Report {
             this.values = null;
         } else {
             String firstHeader = generalData.getHeaders().get(0);
-            int size = generalData.getValues().get(firstHeader).size();
-            this.headers = new String[generalData.getHeaders().size()];
-            this.values = new String[size][generalData.getHeaders().size()];
+            int listOfValuesSize = generalData.getValues().get(firstHeader).size();
+            int headerSize = generalData.getHeaders().size();
+            this.headers = new String[headerSize];
+            this.values = new String[listOfValuesSize][headerSize];
         }
         this.generalData = generalData;
     }

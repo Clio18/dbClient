@@ -1,6 +1,7 @@
 package com.obolonyk.dbclient.report;
 
 import com.obolonyk.dbclient.entity.GeneralData;
+import com.obolonyk.dbclient.util.Constants;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -26,36 +27,34 @@ public class HtmlReporter implements Report {
         File reportFile = new File(path, "report" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
             bufferedWriter.write(html);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String createHTML(GeneralData generalData) {
+    static String createHTML(GeneralData generalData) {
         List<String> headers = generalData.getHeaders();
         Map<String, List<String>> values = generalData.getValues();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<table>");
-        stringBuilder.append("<tr>");
+        stringBuilder.append(Constants.OPEN_TABLE_TAG);
+        stringBuilder.append(Constants.OPEN_TR_TAG);
         for (String header : headers) {
-            stringBuilder.append("<th>");
+            stringBuilder.append(Constants.OPEN_TH_TAG);
             stringBuilder.append(header);
-            stringBuilder.append("</th>");
+            stringBuilder.append(Constants.CLOSE_TH_TAG);
         }
-        stringBuilder.append("</tr>");
-        stringBuilder.append("<tr>");
+        stringBuilder.append(Constants.CLOSE_TR_TAG);
         Set<String> keySet = values.keySet();
         for (String header : keySet) {
+            stringBuilder.append(Constants.OPEN_TR_TAG);
             for (String value : values.get(header)) {
-                stringBuilder.append("<td>");
+                stringBuilder.append(Constants.OPEN_TD_TAG);
                 stringBuilder.append(value);
-                stringBuilder.append("</td>");
+                stringBuilder.append(Constants.CLOSE_TD_TAG);
             }
+            stringBuilder.append(Constants.CLOSE_TR_TAG);
         }
-        stringBuilder.append("</tr>");
-        stringBuilder.append("</table>");
+        stringBuilder.append(Constants.CLOSE_TABLE_TAG);
         return stringBuilder.toString();
     }
 }
