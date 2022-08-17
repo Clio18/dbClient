@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class HtmlReporter implements Report {
+public class HtmlReporter implements Reporter {
     private GeneralData generalData;
     private String path;
 
@@ -24,7 +24,7 @@ public class HtmlReporter implements Report {
         String html = createHTML(generalData);
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        File reportFile = new File(path, "report" + formatter.format(date) + ".html");
+        File reportFile = new File(path, "report_" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
             bufferedWriter.write(html);
             bufferedWriter.flush();

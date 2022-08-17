@@ -3,7 +3,7 @@ package com.obolonyk.dbclient.report;
 import com.jakewharton.fliptables.FlipTableConverters;
 import com.obolonyk.dbclient.entity.GeneralData;
 
-public class ConsoleReporter implements Report {
+public class ConsoleReporter implements Reporter {
     private String[] headers;
     private String[][] values;
     private GeneralData generalData;
@@ -24,12 +24,12 @@ public class ConsoleReporter implements Report {
 
     @Override
     public void generate() {
-        ConsoleReporter prepareData = this.prepare();
-        System.out.println(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
-    }
-
-    public void show() {
-        System.out.println(generalData.getUpdatedRows());
+        if (generalData.getUpdatedRows() != -1) {
+            System.out.println(generalData.getUpdatedRows());
+        } else {
+            ConsoleReporter prepareData = this.prepare();
+            System.out.println(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
+        }
     }
 
     public ConsoleReporter prepare() {
