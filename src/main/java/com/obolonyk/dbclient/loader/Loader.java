@@ -19,7 +19,7 @@ public class Loader {
    static Properties getProperties(String propertiesFileName) throws IOException {
         Properties properties = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        try (InputStream inputStream = loader.getResourceAsStream(propertiesFileName);) {
+        try (InputStream inputStream = loader.getResourceAsStream(propertiesFileName)) {
             properties.load(inputStream);
         }
         return properties;

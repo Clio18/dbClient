@@ -1,6 +1,7 @@
 package com.obolonyk.dbclient.report;
 
 import com.obolonyk.dbclient.entity.GeneralData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConsoleReporterTest {
 
     @Test
+    @DisplayName("test Console Data Show Method")
     void testConsoleDataShowMethod() {
         List<String> headers = List.of("one", "two", "three");
         Map<String, List<String>> values = new HashMap<>();
@@ -24,6 +26,7 @@ class ConsoleReporterTest {
     }
 
     @Test
+    @DisplayName("test Console Data Prepare Method")
     void testConsoleDataPrepareMethod() {
         List<String> headers = List.of("one", "two", "three");
         Map<String, List<String>> values = new HashMap<>();

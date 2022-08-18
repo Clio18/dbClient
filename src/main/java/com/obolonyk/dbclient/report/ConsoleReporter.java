@@ -2,6 +2,7 @@ package com.obolonyk.dbclient.report;
 
 import com.jakewharton.fliptables.FlipTableConverters;
 import com.obolonyk.dbclient.entity.GeneralData;
+import com.obolonyk.dbclient.util.Helper;
 
 public class ConsoleReporter implements Reporter {
     private String[] headers;
@@ -26,10 +27,10 @@ public class ConsoleReporter implements Reporter {
     @Override
     public void generate() {
         if (generalData.getUpdatedRows() != -1) {
-            System.out.println(generalData.getUpdatedRows());
+            Helper.showUpdatedRowsMessage(generalData.getUpdatedRows());
         } else {
             ConsoleReporter prepareData = this.prepare();
-            System.out.println(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
+            Helper.showTableMessage(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
         }
     }
 

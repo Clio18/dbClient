@@ -19,7 +19,7 @@ public class Executor {
     }
 
     public GeneralData getData(Query query) throws SQLException {
-        try (Statement statement = connection.createStatement();) {
+        try (Statement statement = connection.createStatement()) {
             GeneralData generalData = new GeneralData();
             if (query.isUpdate()) {
                 int i = statement.executeUpdate(query.getQuery());

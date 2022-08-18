@@ -1,6 +1,7 @@
 package com.obolonyk.dbclient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ class StarterITest {
     }
 
     @Test
+    @DisplayName("test Read From Application Properties File")
     void testReadFromApplicationPropertiesFile() throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -44,21 +46,7 @@ class StarterITest {
     }
 
     @Test
-    void testPrintDbTableAfterSelect() throws SQLException {
-        ResultSet resultSet = statement.executeQuery("SELECT * from users");
-        ResultSetMetaData rsmd = resultSet.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (resultSet.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print(",  ");
-                String columnValue = resultSet.getString(i);
-                System.out.print(columnValue + " " + rsmd.getColumnName(i));
-            }
-            System.out.println("");
-        }
-    }
-
-    @Test
+    @DisplayName("test Check Result After Insert")
     void testCheckResultAfterInsert() throws SQLException {
         int i = statement.executeUpdate("INSERT INTO Users VALUES (4, 'Simpson', 'Springfield');");
         assertEquals(1, i);

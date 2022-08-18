@@ -1,6 +1,7 @@
 package com.obolonyk.dbclient.report;
 
 import com.obolonyk.dbclient.entity.GeneralData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HtmlReporterTest {
 
     @Test
+    @DisplayName("test Create HTML")
     void testCreateHTML (){
         String expected = """
                 <table>
