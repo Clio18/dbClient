@@ -6,7 +6,7 @@ public class Constants {
     public static final String PASSWORD = "password";
     public static final String DRIVER = "driver";
 
-    public static final String PATH = "path";
+    public static final String PATH = "src/main/resources/reports";
 
     public static final String INSERT = "INSERT";
     public static final String UPDATE = "UPDATE";
