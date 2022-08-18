@@ -11,10 +11,7 @@ public class Constants {
     public static final String INSERT = "INSERT";
     public static final String UPDATE = "UPDATE";
     public static final String DELETE = "DELETE";
-
     public static final String CREATE = "CREATE";
-    public static final String SELECT = "SELECT";
-
     public static final String DROP = "DROP";
 
     public static final String OPEN_TABLE_TAG = "<table>\n";

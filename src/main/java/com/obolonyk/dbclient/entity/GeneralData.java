@@ -24,16 +24,8 @@ public class GeneralData {
         return headers;
     }
 
-    public void setHeaders(List<String> headers) {
-        this.headers = headers;
-    }
-
     public Map<String, List<String>> getValues() {
         return values;
-    }
-
-    public void setValues(Map<String, List<String>> values) {
-        this.values = values;
     }
 
     public int getUpdatedRows() {

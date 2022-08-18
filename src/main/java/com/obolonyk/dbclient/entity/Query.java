@@ -20,13 +20,10 @@ public class Query {
     }
 
     private boolean isUpdate(String query) {
-        if (query.startsWith(Constants.INSERT)||
-            query.startsWith(Constants.UPDATE)||
-            query.startsWith(Constants.CREATE)||
-            query.startsWith(Constants.DROP)||
-            query.startsWith(Constants.DELETE)){
-            return true;
-        }
-        return false;
+        return query.startsWith(Constants.INSERT) ||
+                query.startsWith(Constants.UPDATE) ||
+                query.startsWith(Constants.CREATE) ||
+                query.startsWith(Constants.DROP) ||
+                query.startsWith(Constants.DELETE);
     }
 }
