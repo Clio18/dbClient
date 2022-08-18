@@ -1,11 +1,13 @@
 package com.obolonyk.dbclient.loader;
 
 import com.obolonyk.dbclient.util.Constants;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Slf4j
 public class Loader {
 
     public static Properties load (String propertiesFileName) throws IOException {
@@ -13,6 +15,7 @@ public class Loader {
         if(properties.isEmpty()){
             properties = getProperties(propertiesFileName);
         }
+        log.info("The properties were loaded from from application properties file");
         return properties;
     }
 
@@ -27,10 +30,15 @@ public class Loader {
 
     static Properties getProperties() {
         Properties properties = new Properties();
-        properties.setProperty(Constants.USER_NAME, System.getenv(Constants.USER_NAME));
-        properties.setProperty(Constants.PASSWORD, System.getenv(Constants.PASSWORD));
-        properties.setProperty(Constants.DRIVER, System.getenv(Constants.DRIVER));
-        properties.setProperty(Constants.DB_URL, System.getenv(Constants.DB_URL));
-        return properties;
+        try {
+            properties.setProperty(Constants.USER_NAME, System.getenv(Constants.USER_NAME));
+            properties.setProperty(Constants.PASSWORD, System.getenv(Constants.PASSWORD));
+            properties.setProperty(Constants.DRIVER, System.getenv(Constants.DRIVER));
+            properties.setProperty(Constants.DB_URL, System.getenv(Constants.DB_URL));
+        }catch (NullPointerException e){
+            return properties;
+        }
+        log.info("The properties were loaded from from environment variable");
+      return properties;
     }
 }
