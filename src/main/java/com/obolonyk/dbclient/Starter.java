@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class Starter {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        Properties properties = Loader.load("application2.properties");
+        Properties properties = Loader.load("application.properties");
         Scanner scanner = new Scanner(System.in);
         Executor executor = new Executor(properties);
         Helper.introMessage();
