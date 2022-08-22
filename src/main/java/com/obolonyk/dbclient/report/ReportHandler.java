@@ -4,11 +4,11 @@ import com.obolonyk.dbclient.entity.GeneralData;
 
 public class ReportHandler {
 
-    public static void handle(GeneralData generalData, String path) {
+    public static void handle(GeneralData generalData) {
         Reporter consoleReporter = new ConsoleReporter(generalData);
         consoleReporter.generate();
         if (generalData.getUpdatedRows() == -1) {
-            Reporter htmlReporter = new HtmlReporter(generalData, path);
+            Reporter htmlReporter = new HtmlReporter(generalData);
             htmlReporter.generate();
         }
     }

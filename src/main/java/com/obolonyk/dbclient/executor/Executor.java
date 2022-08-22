@@ -3,7 +3,6 @@ package com.obolonyk.dbclient.executor;
 
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
-import com.obolonyk.dbclient.util.Constants;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +11,11 @@ import java.util.Properties;
 public class Executor {
     private Properties properties;
     private Connection connection;
+
+    private static final String DB_URL = "url";
+    private static final String USER_NAME = "user";
+    private static final String PASSWORD = "password";
+    private static final String DRIVER = "driver";
 
     public Executor(Properties properties) throws SQLException, ClassNotFoundException {
         this.properties = properties;
@@ -47,9 +51,9 @@ public class Executor {
     }
 
     Connection config() throws ClassNotFoundException, SQLException {
-        Class.forName(properties.getProperty(Constants.DRIVER));
-        return DriverManager.getConnection(properties.getProperty(Constants.DB_URL),
-                properties.getProperty(Constants.USER_NAME),
-                properties.getProperty(Constants.PASSWORD));
+        Class.forName(properties.getProperty(DRIVER));
+        return DriverManager.getConnection(properties.getProperty(DB_URL),
+                properties.getProperty(USER_NAME),
+                properties.getProperty(PASSWORD));
     }
 }

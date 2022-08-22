@@ -1,10 +1,14 @@
 package com.obolonyk.dbclient.entity;
 
-import com.obolonyk.dbclient.util.Constants;
-
 public class Query {
     private String query;
     private boolean isUpdate;
+
+    private static final String INSERT = "INSERT";
+    private static final String UPDATE = "UPDATE";
+    private static final String DELETE = "DELETE";
+    private static final String CREATE = "CREATE";
+    private static final String DROP = "DROP";
 
     public Query(String query) {
         this.query = query;
@@ -20,10 +24,10 @@ public class Query {
     }
 
     private boolean isUpdate(String query) {
-        return query.startsWith(Constants.INSERT) ||
-                query.startsWith(Constants.UPDATE) ||
-                query.startsWith(Constants.CREATE) ||
-                query.startsWith(Constants.DROP) ||
-                query.startsWith(Constants.DELETE);
+        return query.startsWith(INSERT) ||
+                query.startsWith(UPDATE) ||
+                query.startsWith(CREATE) ||
+                query.startsWith(DROP) ||
+                query.startsWith(DELETE);
     }
 }

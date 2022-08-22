@@ -1,6 +1,6 @@
 package com.obolonyk.dbclient.util;
 
-public class Helper {
+public class ConsoleOutput {
 
     public static void introMessage() {
         System.out.println("""

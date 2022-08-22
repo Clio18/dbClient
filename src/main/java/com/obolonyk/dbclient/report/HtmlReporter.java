@@ -1,7 +1,6 @@
 package com.obolonyk.dbclient.report;
 
 import com.obolonyk.dbclient.entity.GeneralData;
-import com.obolonyk.dbclient.util.Constants;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -12,19 +11,33 @@ import java.util.Set;
 
 public class HtmlReporter implements Reporter {
     private GeneralData generalData;
-    private String path;
 
-    public HtmlReporter(GeneralData generalData, String path) {
+    private static final String PATH = "src/main/resources/reports";
+
+    private static final String OPEN_TABLE_TAG = "<table>\n";
+    private static final String CLOSE_TABLE_TAG = "</table>\n";
+    private static final String OPEN_TR_TAG = "    <tr>\n";
+    private static final String CLOSE_TR_TAG = "    </tr>\n";
+    private static final String OPEN_TH_TAG = "        <th>";
+    private static final String CLOSE_TH_TAG = "</th>\n";
+    private static final String OPEN_TD_TAG = "        <td>";
+    private static final String CLOSE_TD_TAG = "</td>\n";
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+    public HtmlReporter(GeneralData generalData) {
         this.generalData = generalData;
-        this.path = path;
     }
 
     @Override
     public void generate() {
         String html = createHTML(generalData);
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        File reportFile = new File(path, "report_" + formatter.format(date) + ".html");
+        File dir = new File(PATH);
+        if (!dir.exists()){
+            dir.mkdir();
+        }
+        File reportFile = new File(PATH, "report_" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
             bufferedWriter.write(html);
         } catch (IOException e) {
@@ -36,14 +49,14 @@ public class HtmlReporter implements Reporter {
         List<String> headers = generalData.getHeaders();
         Map<String, List<String>> values = generalData.getValues();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Constants.OPEN_TABLE_TAG);
-        stringBuilder.append(Constants.OPEN_TR_TAG);
+        stringBuilder.append(OPEN_TABLE_TAG);
+        stringBuilder.append(OPEN_TR_TAG);
         for (String header : headers) {
-            stringBuilder.append(Constants.OPEN_TH_TAG);
+            stringBuilder.append(OPEN_TH_TAG);
             stringBuilder.append(header);
-            stringBuilder.append(Constants.CLOSE_TH_TAG);
+            stringBuilder.append(CLOSE_TH_TAG);
         }
-        stringBuilder.append(Constants.CLOSE_TR_TAG);
+        stringBuilder.append(CLOSE_TR_TAG);
 
         //to get the size of the list of values
         Set<String> keySet = values.keySet();
@@ -51,16 +64,16 @@ public class HtmlReporter implements Reporter {
         int sizeOfListValues = values.get(firstHeader).size();
 
         for (int i = 0; i < sizeOfListValues; i++) {
-            stringBuilder.append(Constants.OPEN_TR_TAG);
+            stringBuilder.append(OPEN_TR_TAG);
             for (String header : headers) {
-                stringBuilder.append(Constants.OPEN_TD_TAG);
+                stringBuilder.append(OPEN_TD_TAG);
                 String value = values.get(header).get(i);
                 stringBuilder.append(value);
-                stringBuilder.append(Constants.CLOSE_TD_TAG);
+                stringBuilder.append(CLOSE_TD_TAG);
             }
-            stringBuilder.append(Constants.CLOSE_TR_TAG);
+            stringBuilder.append(CLOSE_TR_TAG);
         }
-        stringBuilder.append(Constants.CLOSE_TABLE_TAG);
+        stringBuilder.append(CLOSE_TABLE_TAG);
         return stringBuilder.toString();
     }
 }

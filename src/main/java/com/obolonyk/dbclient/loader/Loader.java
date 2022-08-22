@@ -1,6 +1,5 @@
 package com.obolonyk.dbclient.loader;
 
-import com.obolonyk.dbclient.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -9,6 +8,11 @@ import java.util.Properties;
 
 @Slf4j
 public class Loader {
+
+    private static final String DB_URL = "url";
+    private static final String USER_NAME = "user";
+    private static final String PASSWORD = "password";
+    private static final String DRIVER = "driver";
 
     public static Properties load (String propertiesFileName) throws IOException {
         Properties properties = getProperties();
@@ -31,10 +35,10 @@ public class Loader {
     static Properties getProperties() {
         Properties properties = new Properties();
         try {
-            properties.setProperty(Constants.USER_NAME, System.getenv(Constants.USER_NAME));
-            properties.setProperty(Constants.PASSWORD, System.getenv(Constants.PASSWORD));
-            properties.setProperty(Constants.DRIVER, System.getenv(Constants.DRIVER));
-            properties.setProperty(Constants.DB_URL, System.getenv(Constants.DB_URL));
+            properties.setProperty(USER_NAME, System.getenv(USER_NAME));
+            properties.setProperty(PASSWORD, System.getenv(PASSWORD));
+            properties.setProperty(DRIVER, System.getenv(DRIVER));
+            properties.setProperty(DB_URL, System.getenv(DB_URL));
         }catch (NullPointerException e){
             return properties;
         }
