@@ -1,6 +1,5 @@
 package com.obolonyk.dbclient.executor;
 
-
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
 
@@ -36,6 +35,7 @@ public class Executor {
                 while (resultSet.next()) {
                     for (String header : generalData.getHeaders()) {
                         String columnValue = resultSet.getString(header);
+                        generalData.getData().add(columnValue);
                         generalData.getValues().get(header).add(columnValue);
                     }
                 }

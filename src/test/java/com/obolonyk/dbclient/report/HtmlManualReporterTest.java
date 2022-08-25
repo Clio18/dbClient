@@ -10,11 +10,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HtmlReporterTest {
+class HtmlManualReporterTest {
 
     @Test
     @DisplayName("test Create HTML")
-    void testCreateHTML (){
+    void testCreateHTML() {
         String expected = """
                 <table>
                     <tr>
@@ -50,7 +50,7 @@ class HtmlReporterTest {
         values.put("NAME", List.of("Ram", "And", "Mes", "Tak"));
         values.put("LAST_NAME", List.of("Ahmed", "Babad", "Medab", "Nuno"));
         GeneralData generalData = new GeneralData(headers, values);
-        String html = HtmlReporter.createHTML(generalData);
+        String html = HtmlManualReporter.createHTML(generalData);
         assertEquals(expected, html);
     }
 

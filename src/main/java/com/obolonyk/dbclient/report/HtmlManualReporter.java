@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class HtmlReporter implements Reporter {
+public class HtmlManualReporter implements Reporter {
     private GeneralData generalData;
 
     private static final String PATH = "src/main/resources/reports";
@@ -25,7 +25,7 @@ public class HtmlReporter implements Reporter {
 
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-    public HtmlReporter(GeneralData generalData) {
+    public HtmlManualReporter(GeneralData generalData) {
         this.generalData = generalData;
     }
 

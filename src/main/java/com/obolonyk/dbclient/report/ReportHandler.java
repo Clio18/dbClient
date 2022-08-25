@@ -8,7 +8,7 @@ public class ReportHandler {
         Reporter consoleReporter = new ConsoleReporter(generalData);
         consoleReporter.generate();
         if (generalData.getUpdatedRows() == -1) {
-            Reporter htmlReporter = new HtmlReporter(generalData);
+            Reporter htmlReporter = new HTMLFreeMarkerReporter(generalData);
             htmlReporter.generate();
         }
     }

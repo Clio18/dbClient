@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Products</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+            crossorigin="anonymous"
+    />
+</head>
+<body>
+<h1>Report:</h1>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"
+></script>
+<table class="table table-striped">
+    <tr>
+        <#list headers as x>
+        <th>${x}</th>
+        </#list>
+    </tr>
+
+    <#assign count = 0>
+    <#assign row = (data?size/headers?size)-1>
+    <#assign column = (headers?size)-1>
+
+    <#list 0..row as e>
+        <tr>
+            <#list 0..column as x>
+                <td>${data[count]!}</td>
+                <#assign count = count + 1>
+            </#list>
+        </tr>
+    </#list>
+</table>
+
+</body>
+</html>

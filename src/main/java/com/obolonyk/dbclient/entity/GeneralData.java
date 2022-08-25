@@ -7,12 +7,15 @@ import java.util.Map;
 
 public class GeneralData {
     private List<String> headers;
+    private List<String> data;
     private Map<String, List<String>> values;
     private int updatedRows = -1;
 
     public GeneralData() {
         this.headers = new ArrayList<>();
+        this.data = new ArrayList<>();
         this.values = new HashMap<>();
+
     }
 
     public GeneralData(List<String> headers, Map<String, List<String>> values) {
@@ -26,6 +29,10 @@ public class GeneralData {
 
     public Map<String, List<String>> getValues() {
         return values;
+    }
+
+    public List<String> getData() {
+        return data;
     }
 
     public int getUpdatedRows() {
