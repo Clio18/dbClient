@@ -13,7 +13,7 @@ class LoaderTest {
     @Test
     @DisplayName("test GetProperties From File")
     void testGetPropertiesFromFile () throws IOException {
-        Properties properties = Loader.getProperties("application.properties");
+        Properties properties = Loader.getPropertiesFromFile();
         assertNotNull(properties);
         assertFalse(properties.isEmpty());
         assertEquals("value", properties.getProperty("key"));
@@ -22,7 +22,7 @@ class LoaderTest {
     @Test
     @DisplayName("test GetProperties From Environment Variable")
     void testGetPropertiesFromEnvironmentVariable () {
-        Properties properties = Loader.getProperties();
+        Properties properties = Loader.getPropertiesFromEnv();
         assertNotNull(properties);
         assertFalse(properties.isEmpty());
         assertEquals("sa", properties.getProperty("user"));

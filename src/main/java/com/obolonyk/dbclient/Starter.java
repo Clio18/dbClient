@@ -7,16 +7,16 @@ import com.obolonyk.dbclient.loader.Loader;
 import com.obolonyk.dbclient.report.ReportHandler;
 import com.obolonyk.dbclient.util.ConsoleOutput;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.Scanner;
 
 public class Starter {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        Properties properties = Loader.load("application.properties");
+    public static void main(String[] args) throws SQLException, IOException {
+        DataSource dataSource = Loader.getDataSource();
         Scanner scanner = new Scanner(System.in);
-        Executor executor = new Executor(properties);
+        Executor executor = new Executor(dataSource);
         ConsoleOutput.introMessage();
         while (true) {
             ConsoleOutput.executionMessage();

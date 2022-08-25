@@ -4,25 +4,19 @@ package com.obolonyk.dbclient.executor;
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class Executor {
-    private Properties properties;
-    private Connection connection;
+    private DataSource dataSource;
 
-    private static final String DB_URL = "url";
-    private static final String USER_NAME = "user";
-    private static final String PASSWORD = "password";
-    private static final String DRIVER = "driver";
-
-    public Executor(Properties properties) throws SQLException, ClassNotFoundException {
-        this.properties = properties;
-        this.connection = config();
+    public Executor(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public GeneralData getData(Query query) throws SQLException {
+        Connection connection = dataSource.getConnection();
         try (Statement statement = connection.createStatement()) {
             GeneralData generalData = new GeneralData();
             if (query.isUpdate()) {
@@ -48,12 +42,5 @@ public class Executor {
             }
             return generalData;
         }
-    }
-
-    Connection config() throws ClassNotFoundException, SQLException {
-        Class.forName(properties.getProperty(DRIVER));
-        return DriverManager.getConnection(properties.getProperty(DB_URL),
-                properties.getProperty(USER_NAME),
-                properties.getProperty(PASSWORD));
     }
 }
