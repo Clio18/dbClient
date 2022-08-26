@@ -10,6 +10,12 @@ public class GeneralData {
     private List<String> data;
     private Map<String, List<String>> values;
     private int updatedRows = -1;
+    private boolean isSelect;
+
+    public GeneralData(List<String> headers, Map<String, List<String>> values) {
+        this.headers = headers;
+        this.values = values;
+    }
 
     public GeneralData() {
         this.headers = new ArrayList<>();
@@ -18,9 +24,12 @@ public class GeneralData {
 
     }
 
-    public GeneralData(List<String> headers, Map<String, List<String>> values) {
-        this.headers = headers;
-        this.values = values;
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
     }
 
     public List<String> getHeaders() {

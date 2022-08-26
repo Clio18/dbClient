@@ -2,6 +2,7 @@ package com.obolonyk.dbclient.executor;
 
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
+import com.obolonyk.dbclient.util.QueryAnalyzer;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,14 +15,27 @@ public class Executor {
         this.dataSource = dataSource;
     }
 
-    public GeneralData getData(Query query) throws SQLException {
+    public GeneralData getData(Query query, QueryAnalyzer queryAnalyzer) throws SQLException {
         Connection connection = dataSource.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            GeneralData generalData = new GeneralData();
-            if (query.isUpdate()) {
-                int i = statement.executeUpdate(query.getQuery());
-                generalData.setUpdatedRows(i);
-            } else {
+        GeneralData generalData = new GeneralData();
+        if (query.isUpdate()) {
+            String queryForPreparedStatement = QueryAnalyzer.creationQueryForPreparedStatement(query.getQuery());
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryForPreparedStatement)) {
+
+                queryAnalyzer.analyze(query.getQuery());
+                if (query.getQuery().contains("INSERT")) {
+                    PreparedStatement statement = queryAnalyzer.constructPreparedStatement(preparedStatement);
+                    int i = statement.executeUpdate();
+                    generalData.setUpdatedRows(i);
+                } else {
+                    preparedStatement.execute();
+                    //TODO
+                    generalData.setUpdatedRows(1);
+                }
+            }
+        } else {
+            try (Statement statement = connection.createStatement()) {
+                generalData.setSelect(true);
                 ResultSet resultSet = statement.executeQuery(query.getQuery());
                 ResultSetMetaData rsmd = resultSet.getMetaData();
                 int columnsNumber = rsmd.getColumnCount();
@@ -40,7 +54,7 @@ public class Executor {
                     }
                 }
             }
-            return generalData;
         }
+        return generalData;
     }
 }

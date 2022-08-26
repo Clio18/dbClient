@@ -9,7 +9,7 @@ public class ConsoleOutput {
                 - \u001B[33m to create db table: 
                     \u001B[32m CREATE TABLE IF NOT EXISTS USERS(ID INT PRIMARY KEY NOT NULL UNIQUE, NAME VARCHAR(255), LAST_NAME VARCHAR(255));\u001B[0m
                 - \u001B[33m to insert record: 
-                    \u001B[32m INSERT INTO USERS VALUES (1, 'Ramesh', 'Ahmed');\u001B[0m
+                    \u001B[32m INSERT INTO USERS (ID, NAME, LAST_NAME) VALUES (1, 'Ramesh', 'Ahmed');\u001B[0m
                 - \u001B[33m to select all: 
                     \u001B[32m SELECT * from users;\u001B[0m
                 - \u001B[33m to drop db table: 

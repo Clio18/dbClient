@@ -52,4 +52,15 @@ class StarterITest {
         assertEquals(1, i);
     }
 
+    @Test
+    @DisplayName("test")
+    void test() throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO USERS (ID, NAME, LAST_NAME) VALUES(?, ?, ?)");
+        preparedStatement.setInt(1, 5);
+        preparedStatement.setString(2, "A");
+        preparedStatement.setString(3, "B");
+        int i = preparedStatement.executeUpdate();
+        System.out.println(i);
+    }
+
 }
