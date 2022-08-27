@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static org.h2.server.web.PageParser.escapeHtml;
+
 public class HtmlManualReporter implements Reporter {
     private GeneralData generalData;
 
@@ -53,7 +55,10 @@ public class HtmlManualReporter implements Reporter {
         stringBuilder.append(OPEN_TR_TAG);
         for (String header : headers) {
             stringBuilder.append(OPEN_TH_TAG);
-            stringBuilder.append(header);
+
+            String escapedHeader = escapeHtml(header);
+            stringBuilder.append(escapedHeader);
+
             stringBuilder.append(CLOSE_TH_TAG);
         }
         stringBuilder.append(CLOSE_TR_TAG);
@@ -68,7 +73,9 @@ public class HtmlManualReporter implements Reporter {
             for (String header : headers) {
                 stringBuilder.append(OPEN_TD_TAG);
                 String value = values.get(header).get(i);
-                stringBuilder.append(value);
+
+                String escapedValue = escapeHtml(value);
+                stringBuilder.append(escapedValue);
                 stringBuilder.append(CLOSE_TD_TAG);
             }
             stringBuilder.append(CLOSE_TR_TAG);

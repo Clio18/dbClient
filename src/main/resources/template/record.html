@@ -11,6 +11,20 @@
             crossorigin="anonymous"
     />
 </head>
+<style>
+    h1 {
+  font-family: verdana;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 50px;
+  margin-top: 20px;
+}
+div {
+  width: 600px;
+  margin-left: 50px;
+  text-align: center;
+}
+</style>
 <body>
 <h1>Report:</h1>
 <script
@@ -18,10 +32,14 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"
 ></script>
-<table class="table table-striped">
+<div>
+<table class="table table-info">
     <tr>
         <#list headers as x>
-        <th>${x}</th>
+            <#escape x as x?html>
+            <#-- name is escaped as html -->
+                <th>${x}</th>
+            </#escape>
         </#list>
     </tr>
 
@@ -32,12 +50,17 @@
     <#list 0..row as e>
         <tr>
             <#list 0..column as x>
-                <td>${data[count]!}</td>
+
+                <#escape data as data?html>
+                <#-- name is escaped as html -->
+                    <td>${data[count]!}</td>
+                </#escape>
+
                 <#assign count = count + 1>
             </#list>
         </tr>
     </#list>
 </table>
-
+</div>
 </body>
 </html>
