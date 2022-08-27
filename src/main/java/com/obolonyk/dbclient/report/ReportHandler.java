@@ -7,8 +7,8 @@ public class ReportHandler {
     public static void handle(GeneralData generalData) {
         Reporter consoleReporter = new ConsoleReporter(generalData);
         consoleReporter.generate();
-        if (generalData.isSelect()) {
-            Reporter htmlReporter = new HTMLFreeMarkerReporter(generalData);
+        if (generalData.getUpdatedRows() == -1) {
+            Reporter htmlReporter = new HtmlManualReporter(generalData);
             htmlReporter.generate();
         }
     }

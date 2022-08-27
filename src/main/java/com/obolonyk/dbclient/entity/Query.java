@@ -30,6 +30,4 @@ public class Query {
                 query.startsWith(DROP) ||
                 query.startsWith(DELETE);
     }
-
-
 }
