@@ -1,21 +1,25 @@
 package com.obolonyk.dbclient.entity;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class GeneralData {
     private List<String> headers;
     private List<String> data;
     private Map<String, List<String>> values;
-    private int updatedRows = -1;
+    private boolean isSelect;
+    private int updatedRows;
+
 
     public GeneralData() {
         this.headers = new ArrayList<>();
         this.data = new ArrayList<>();
         this.values = new HashMap<>();
-
     }
 
     public GeneralData(List<String> headers, Map<String, List<String>> values) {
@@ -41,5 +45,13 @@ public class GeneralData {
 
     public void setUpdatedRows(int i) {
         this.updatedRows = i;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }

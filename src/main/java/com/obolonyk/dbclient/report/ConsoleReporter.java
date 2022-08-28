@@ -26,11 +26,11 @@ public class ConsoleReporter implements Reporter {
 
     @Override
     public void generate() {
-        if (generalData.getUpdatedRows() != -1) {
-            ConsoleOutput.showUpdatedRowsMessage(generalData.getUpdatedRows());
-        } else {
+        if (generalData.isSelect()) {
             ConsoleReporter prepareData = this.prepare();
             ConsoleOutput.showTableMessage(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
+        } else {
+            ConsoleOutput.showUpdatedRowsMessage(generalData.getUpdatedRows());
         }
     }
 

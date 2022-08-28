@@ -20,8 +20,10 @@ public class Executor {
             GeneralData generalData = new GeneralData();
             if (query.isUpdate()) {
                 int i = statement.executeUpdate(query.getQuery());
+                generalData.setSelect(false);
                 generalData.setUpdatedRows(i);
             } else {
+                generalData.setSelect(true);
                 ResultSet resultSet = statement.executeQuery(query.getQuery());
 
                 extractedHeaders(generalData, resultSet);
@@ -35,7 +37,8 @@ public class Executor {
     static void extractedValues(GeneralData generalData, ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
             for (String header : generalData.getHeaders()) {
-                String columnValue = resultSet.getString(header);
+                String columnValueFromDB = resultSet.getString(header);
+                String columnValue = columnValueFromDB.replace("'", "");
                 generalData.getData().add(columnValue);
                 generalData.getValues().get(header).add(columnValue);
             }
