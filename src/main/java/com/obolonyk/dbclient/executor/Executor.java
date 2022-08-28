@@ -23,24 +23,33 @@ public class Executor {
                 generalData.setUpdatedRows(i);
             } else {
                 ResultSet resultSet = statement.executeQuery(query.getQuery());
-                ResultSetMetaData rsmd = resultSet.getMetaData();
-                int columnsNumber = rsmd.getColumnCount();
 
-                for (int i = 1; i <= columnsNumber; i++) {
-                    String columnName = rsmd.getColumnName(i);
-                    generalData.getHeaders().add(columnName);
-                    generalData.getValues().put(columnName, new ArrayList<>());
-                }
+                extractedHeaders(generalData, resultSet);
 
-                while (resultSet.next()) {
-                    for (String header : generalData.getHeaders()) {
-                        String columnValue = resultSet.getString(header);
-                        generalData.getData().add(columnValue);
-                        generalData.getValues().get(header).add(columnValue);
-                    }
-                }
+                extractedValues(generalData, resultSet);
             }
             return generalData;
+        }
+    }
+
+    static void extractedValues(GeneralData generalData, ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            for (String header : generalData.getHeaders()) {
+                String columnValue = resultSet.getString(header);
+                generalData.getData().add(columnValue);
+                generalData.getValues().get(header).add(columnValue);
+            }
+        }
+    }
+
+    static void extractedHeaders(GeneralData generalData, ResultSet resultSet) throws SQLException {
+        ResultSetMetaData rsmd = resultSet.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+
+        for (int i = 1; i <= columnsNumber; i++) {
+            String columnName = rsmd.getColumnName(i);
+            generalData.getHeaders().add(columnName);
+            generalData.getValues().put(columnName, new ArrayList<>());
         }
     }
 }
