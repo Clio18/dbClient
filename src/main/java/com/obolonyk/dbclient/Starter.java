@@ -4,7 +4,7 @@ import com.obolonyk.dbclient.executor.Executor;
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
 import com.obolonyk.dbclient.loader.Loader;
-import com.obolonyk.dbclient.report.ReportHandler;
+import com.obolonyk.dbclient.handler.ReportHandler;
 import com.obolonyk.dbclient.util.ConsoleOutput;
 
 import javax.sql.DataSource;
@@ -17,9 +17,11 @@ public class Starter {
         DataSource dataSource = Loader.getDataSource();
         Scanner scanner = new Scanner(System.in);
         Executor executor = new Executor(dataSource);
+
         ConsoleOutput.introMessage();
         while (true) {
             ConsoleOutput.executionMessage();
+
             String request = scanner.nextLine();
             Query query = new Query(request);
             GeneralData generalData = executor.getData(query);

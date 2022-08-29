@@ -3,36 +3,35 @@ package com.obolonyk.dbclient.report;
 import com.jakewharton.fliptables.FlipTableConverters;
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.util.ConsoleOutput;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 
-public class ConsoleReporter implements Reporter {
+@Data
+@AllArgsConstructor
+public class ConsoleReporter {
     private GeneralData generalData;
 
-    public ConsoleReporter(GeneralData generalData) {
-        this.generalData = generalData;
-    }
-
-    @Override
     public void generate() {
         if (generalData.isSelect()) {
-
             List<String> headersList = generalData.getHeaders();
-            String [] headers = new String[headersList.size()];
+            String[] headers = new String[headersList.size()];
             headersList.toArray(headers);
 
             String[][] values = prepare(generalData);
-            ConsoleOutput.showTableMessage(FlipTableConverters.fromObjects(headers, values));
+            String table = FlipTableConverters.fromObjects(headers, values);
+            ConsoleOutput.showTableMessage(table);
         } else {
-            ConsoleOutput.showUpdatedRowsMessage(generalData.getUpdatedRows());
+            int updatedRows = generalData.getUpdatedRows();
+            ConsoleOutput.showUpdatedRowsMessage(updatedRows);
         }
     }
 
-    //TODO: iterator
+
     static String[][] prepare(GeneralData generalData) {
         List<String> headers = generalData.getHeaders();
-        //int length = generalData.getValues().get(headers.get(0)).size();
-        int length = generalData.getData().size()/headers.size();
+        int length = generalData.getData().size() / headers.size();
 
         String[][] values = new String[length][headers.size()];
 
@@ -40,11 +39,8 @@ public class ConsoleReporter implements Reporter {
         for (int i = 0; i < length; i++) {
             for (String header : headers) {
                 int index = headers.indexOf(header);
-
-                //String value = generalData.getValues().get(header).get(i);
                 String value = generalData.getData().get(counter);
                 counter++;
-
                 values[i][index] = value;
             }
         }

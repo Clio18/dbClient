@@ -1,6 +1,7 @@
 package com.obolonyk.dbclient.report;
 
 import com.obolonyk.dbclient.entity.GeneralData;
+import lombok.AllArgsConstructor;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -9,7 +10,8 @@ import java.util.List;
 
 import static org.h2.server.web.PageParser.escapeHtml;
 
-public class HtmlManualReporter implements Reporter {
+@AllArgsConstructor
+public class HtmlManualReporter {
     private GeneralData generalData;
 
     //TODO
@@ -76,25 +78,17 @@ public class HtmlManualReporter implements Reporter {
 
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-    public HtmlManualReporter(GeneralData generalData) {
-        this.generalData = generalData;
-    }
-
-
-    @Override
-    public void generate() {
-        String html = createHTML(generalData);
+    public void generate() throws IOException {
+        String report = createHTML(generalData);
         Date date = new Date();
         File dir = new File(PATH);
-        if (!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdir();
         }
         //TODO: test
         File reportFile = new File(PATH, "report_" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
-            bufferedWriter.write(html);
-        } catch (IOException e) {
-            e.printStackTrace();
+            bufferedWriter.write(report);
         }
     }
 
@@ -124,7 +118,7 @@ public class HtmlManualReporter implements Reporter {
         stringBuilder.append(CLOSE_TR_TAG);
 
         //to get the size of the list of values
-        int sizeOfListValues = data.size()/headers.size();
+        int sizeOfListValues = data.size() / headers.size();
 
         int counter = 0;
         for (int i = 0; i < sizeOfListValues; i++) {

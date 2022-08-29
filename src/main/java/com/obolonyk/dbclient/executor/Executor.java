@@ -2,18 +2,16 @@ package com.obolonyk.dbclient.executor;
 
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.entity.Query;
+import lombok.AllArgsConstructor;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class Executor {
     private DataSource dataSource;
-
-    public Executor(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     public GeneralData getData(Query query) throws SQLException {
         Connection connection = dataSource.getConnection();

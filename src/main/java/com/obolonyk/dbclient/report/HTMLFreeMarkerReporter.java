@@ -12,13 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-public class HTMLFreeMarkerReporter implements Reporter {
+public class HTMLFreeMarkerReporter {
     private GeneralData generalData;
     private static final String PATH = "src/main/resources/reports";
 
-
-    @Override
-    public void generate() {
+    public void generate() throws IOException {
         List<String> headers = generalData.getHeaders();
         List<String> data = generalData.getData();
         Map<String, Object> param = new HashMap<>();
@@ -27,15 +25,12 @@ public class HTMLFreeMarkerReporter implements Reporter {
         param.put("data", data);
 
         PageGenerator pageGenerator = PageGenerator.instance();
-        String page = pageGenerator.getPage("record.html", param);
-
+        String report = pageGenerator.getPage("record.html", param);
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         File reportFile = new File(PATH, "report_" + formatter.format(date) + ".html");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportFile)))) {
-            bufferedWriter.write(page);
-        } catch (IOException e) {
-            e.printStackTrace();
+            bufferedWriter.write(report);
         }
     }
 }
