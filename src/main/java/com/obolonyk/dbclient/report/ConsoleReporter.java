@@ -4,59 +4,50 @@ import com.jakewharton.fliptables.FlipTableConverters;
 import com.obolonyk.dbclient.entity.GeneralData;
 import com.obolonyk.dbclient.util.ConsoleOutput;
 
+import java.util.List;
+
 public class ConsoleReporter implements Reporter {
-    private String[] headers;
-    private String[][] values;
     private GeneralData generalData;
 
     public ConsoleReporter(GeneralData generalData) {
-        if (generalData.getHeaders().isEmpty()) {
-            this.headers = null;
-            this.values = null;
-        } else {
-            String firstHeader = generalData.getHeaders().get(0);
-            int listOfValuesSize = generalData.getValues().get(firstHeader).size();
-
-            int headerSize = generalData.getHeaders().size();
-            this.headers = new String[headerSize];
-            this.values = new String[listOfValuesSize][headerSize];
-        }
         this.generalData = generalData;
     }
 
     @Override
     public void generate() {
         if (generalData.isSelect()) {
-            ConsoleReporter prepareData = this.prepare();
-            ConsoleOutput.showTableMessage(FlipTableConverters.fromObjects(prepareData.getHeaders(), prepareData.getValues()));
+
+            List<String> headersList = generalData.getHeaders();
+            String [] headers = new String[headersList.size()];
+            headersList.toArray(headers);
+
+            String[][] values = prepare(generalData);
+            ConsoleOutput.showTableMessage(FlipTableConverters.fromObjects(headers, values));
         } else {
             ConsoleOutput.showUpdatedRowsMessage(generalData.getUpdatedRows());
         }
     }
 
-    ConsoleReporter prepare() {
-        for (int i = 0; i < generalData.getHeaders().size(); i++) {
-            String header = generalData.getHeaders().get(i);
-            headers[i] = header;
-        }
+    //TODO: iterator
+    static String[][] prepare(GeneralData generalData) {
+        List<String> headers = generalData.getHeaders();
+        //int length = generalData.getValues().get(headers.get(0)).size();
+        int length = generalData.getData().size()/headers.size();
 
-        int length = generalData.getValues().get(headers[0]).size();
+        String[][] values = new String[length][headers.size()];
+
+        int counter = 0;
         for (int i = 0; i < length; i++) {
-            for (String header : generalData.getHeaders()) {
-                int index = generalData.getHeaders().indexOf(header);
-                String value = generalData.getValues().get(header).get(i);
+            for (String header : headers) {
+                int index = headers.indexOf(header);
+
+                //String value = generalData.getValues().get(header).get(i);
+                String value = generalData.getData().get(counter);
+                counter++;
+
                 values[i][index] = value;
             }
         }
-
-        return this;
-    }
-
-    public String[] getHeaders() {
-        return headers;
-    }
-
-    public String[][] getValues() {
         return values;
     }
 

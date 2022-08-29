@@ -1,38 +1,36 @@
 package com.obolonyk.dbclient.entity;
 
 import lombok.Data;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class GeneralData {
     private List<String> headers;
     private List<String> data;
-    private Map<String, List<String>> values;
     private boolean isSelect;
     private int updatedRows;
 
 
     public GeneralData() {
-        this.headers = new ArrayList<>();
-        this.data = new ArrayList<>();
-        this.values = new HashMap<>();
+//        this.headers = new ArrayList<>();
+//        this.data = new ArrayList<>();
     }
 
-    public GeneralData(List<String> headers, Map<String, List<String>> values) {
+    public void setHeaders(List<String> headers) {
         this.headers = headers;
-        this.values = values;
+    }
+
+    public void setData(List<String> data) {
+        this.data = data;
+    }
+
+    public GeneralData(List<String> headers) {
+        //this.headers = headers;
     }
 
     public List<String> getHeaders() {
         return headers;
-    }
-
-    public Map<String, List<String>> getValues() {
-        return values;
     }
 
     public List<String> getData() {

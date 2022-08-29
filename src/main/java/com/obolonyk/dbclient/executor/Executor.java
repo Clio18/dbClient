@@ -6,6 +6,7 @@ import com.obolonyk.dbclient.entity.Query;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Executor {
     private DataSource dataSource;
@@ -35,24 +36,27 @@ public class Executor {
     }
 
     static void extractedValues(GeneralData generalData, ResultSet resultSet) throws SQLException {
+        List<String> values = new ArrayList<>();
         while (resultSet.next()) {
             for (String header : generalData.getHeaders()) {
                 String columnValueFromDB = resultSet.getString(header);
                 String columnValue = columnValueFromDB.replace("'", "");
-                generalData.getData().add(columnValue);
-                generalData.getValues().get(header).add(columnValue);
+                values.add(columnValue);
             }
         }
+        generalData.setData(values);
     }
 
     static void extractedHeaders(GeneralData generalData, ResultSet resultSet) throws SQLException {
+        List<String> headers = new ArrayList<>();
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
 
         for (int i = 1; i <= columnsNumber; i++) {
             String columnName = rsmd.getColumnName(i);
-            generalData.getHeaders().add(columnName);
-            generalData.getValues().put(columnName, new ArrayList<>());
+            headers.add(columnName);
         }
+
+        generalData.setHeaders(headers);
     }
 }
